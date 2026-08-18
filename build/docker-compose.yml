@@ -1,6 +1,6 @@
 services:
-  app:
-    image: ${DOCKER_REGISTRY}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
+  debian-mac:
+    image: ${IMAGE_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
     build:
       context: .
       dockerfile: Dockerfile.debian

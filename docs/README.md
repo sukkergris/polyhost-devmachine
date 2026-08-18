@@ -1,5 +1,9 @@
 # Docs
 
+- [Registry configuration](registry-configuration.md) — how `build/.env` drives
+  both the pushed image and the devcontainer's base image, and how to switch
+  to a private registry.
+
 ## Known gotcha: root's `PATH` gets reset on login shells
 
 **Symptom:** `dotnet`, `csharp-ls`, `dotnet-script`, `csharpier`, and `dotnet-format`

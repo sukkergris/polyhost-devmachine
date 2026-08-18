@@ -274,7 +274,6 @@ __pycache__/
 **/logfiles/
 .env
 test/web-api-logfiles/
-
-
+!build/.env
 
 

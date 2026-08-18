@@ -9,7 +9,7 @@ max_attempts=4
 attempt=1
 while true; do
   echo "Push attempt ${attempt}/${max_attempts}..."
-  if docker compose --env-file .env -f docker-compose.yml push app; then
+  if docker compose --env-file .env -f docker-compose.yml push debian-mac; then
     echo "Push succeeded."
     break
   fi

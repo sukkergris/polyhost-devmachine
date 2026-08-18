@@ -9,15 +9,15 @@ tasks:
   build:
     desc: Build using version number from .env
     cmds:
-      - docker compose -f build/docker-compose.yml build app
+      - docker compose -f build/docker-compose.yml build debian-mac
 
   build:devcontainer-base-local:
     desc: Build local base image for devcontainer without pulling from registry
     cmds:
-      - docker build -f build/Dockerfile.debian -t devcontainer.debian.polyhost:local build
+      - docker build -f build/Dockerfile.debian -t polyhost-devcontainer:debian-local build
 
   push:
-    desc: Push image to registry (requires DOCKER_REGISTRY, REPO_NAME, IMAGE_TAG in .env)
+    desc: Push image to registry (requires IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG in .env)
     deps:
       - build
     cmds:
@@ -28,3 +28,8 @@ tasks:
     cmds:
       - task build
       - task push
+
+  devcontainer:sync-env:
+    desc: Regenerate .devmachine/debian/.env from build/.env (registry/tag)
+    cmds:
+      - .devmachine/scripts/sync-build-env.sh
