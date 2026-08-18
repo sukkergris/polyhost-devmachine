@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker *)",
+      "Bash(docker compose *)",
+      "Bash(dotnet *)",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(git *)",
+      "Bash(curl *)",
+      "Bash(./*)",
+      "Edit(*)",
+      "Read(*)",
+      "Write(*)"
+    ]
+  },
+  "defaults": {
+    "shell": "bash",
+    "workingDirectory": "."
+  }
+}

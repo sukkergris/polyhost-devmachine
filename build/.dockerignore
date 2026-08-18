@@ -1,4 +1,4 @@
 .env
-Dockerfile
+Dockerfile.debian
 docker-compose.yml
 *.md

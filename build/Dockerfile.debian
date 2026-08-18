@@ -72,6 +72,13 @@ RUN apt-get update && \
 # Root is required for Docker-heavy devmachine workflows.
 # Keep the image simple by not creating an alternate user.
 
+# Debian's /etc/profile unconditionally resets PATH for root on login shells
+# (bash -l, su -, ssh), which would otherwise drop /opt/dotnet, the dotnet
+# global-tools dir, etc. Re-assert PATH via /etc/profile.d so it survives
+# regardless of shell or login mode.
+RUN echo 'export PATH="'"$PATH"'"' > /etc/profile.d/00-devmachine-path.sh && \
+    chmod +x /etc/profile.d/00-devmachine-path.sh
+
 # Install latest nvim
 RUN NVIM_FILE="nvim-linux-arm64.tar.gz" && \
     echo "Installing Neovim for ARM64 (Mac M3)..." && \
