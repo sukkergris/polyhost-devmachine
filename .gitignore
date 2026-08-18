@@ -1,3 +1,6 @@
+.claude/
+.copilot/
+
 ## Ignore wwwroot since it is build on the fly
 /wwwroot
 ## Ignore Visual Studio temporary files, build results, and

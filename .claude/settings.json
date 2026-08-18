@@ -1,16 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(curl -fsSL https://dot.net/v1/dotnet-install.sh -o /private/tmp/claude-501/-Users-sukkerfrit-private-polyhost-polyhost-devmachine/36185b73-bde8-4487-af37-21f5f2a5e194/scratchpad/dotnet-install.sh)",
-      "Bash(docker run --rm dockerhub/polyhost/devcontainer.debian.polyhost:0.0.0 bash -lc ' *)",
-      "Bash(docker run *)",
-      "Bash(docker run --rm dockerhub/polyhost/devcontainer.debian.polyhost:0.0.0 bash -c ' *)",
-      "Bash(docker compose *)",
-      "Bash(chmod +x /Users/sukkerfrit/private/polyhost/polyhost-devmachine/build/push-with-retry.sh)",
-      "Bash(bash -n /Users/sukkerfrit/private/polyhost/polyhost-devmachine/build/push-with-retry.sh)",
-      "Bash(task --list-all)",
-      "Bash(docker volume *)",
-      "Bash(docker exec polyhost-devcontainer-builder-dev-1 bash -c ' *)"
-    ]
+    "allow": []
   }
 }

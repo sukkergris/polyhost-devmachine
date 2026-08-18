@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate shell syntax
+        run: |
+          bash -n .devcontainer/scripts/copy-ssh-files.sh
+          bash -n .devcontainer/scripts/install-global-npm-tools.sh
+          bash -n .devcontainer/scripts/remove-userkeychain.sh
+          bash -n .devcontainer/scripts/sync-build-env.sh
+
+      - name: Validate Docker build syntax
+        run: |
+          docker build -f build/Dockerfile.debian -t polyhost-devcontainer:ci build
