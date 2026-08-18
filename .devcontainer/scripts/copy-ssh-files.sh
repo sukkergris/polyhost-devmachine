@@ -13,14 +13,9 @@ else
   ls -la "${TEMPLATE_DIR}" || true
 fi
 
-if [ ! -d "${TEMPLATE_DIR}" ]; then
-  echo "Template dir not found: ${TEMPLATE_DIR}"
-  exit 1
-fi
-
-if [ ! -f "${TEMPLATE_DIR}/config" ]; then
-  echo "Can't find your ./sshtemplate/config file"
-  exit 1
+if [ ! -d "${TEMPLATE_DIR}" ] || [ -z "$(ls -A "${TEMPLATE_DIR}" 2>/dev/null)" ]; then
+  echo "No SSH template mounted at ${TEMPLATE_DIR}; skipping SSH setup."
+  exit 0
 fi
 
 mkdir -p "${SSH_DIR}" || {
@@ -31,6 +26,10 @@ cp -rf "${TEMPLATE_DIR}/." "${SSH_DIR}/" || {
   echo "ERROR: copying SSH template failed" >&2
   exit 1
 }
+
+if [ -f "${TEMPLATE_DIR}/config" ]; then
+  chmod 600 "${SSH_DIR}/config" 2>/dev/null || true
+fi
 
 chmod 700 "${SSH_DIR}"
 find "${SSH_DIR}" -mindepth 1 -type d -exec chmod 700 {} + 2>/dev/null || true

@@ -100,6 +100,8 @@ RUN curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh && \
 # Stay root for the full devmachine build so Docker and system tools work without permission issues.
 USER root
 WORKDIR $HOME_DIR
+RUN mkdir -p /root/.ssh /root/.sshtemplate && \
+    chmod 700 /root/.ssh /root/.sshtemplate
 
 # Install nvm + Node and expose binaries system-wide
 ENV NVM_DIR=/root/.nvm

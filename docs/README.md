@@ -49,3 +49,25 @@ root `PATH` reset line, so this survives regardless of shell or login mode.
 Verified by rebuilding the image and confirming `dotnet`/`csharp-ls` etc.
 resolve correctly under `bash -lc '...'` as well as plain `bash -c '...'`
 and `zsh -lic '...'`.
+
+## Why the SSH directories are created in the image
+
+The devcontainer mounts the host's SSH directory into `/root/.sshtemplate` via
+`.devcontainer/debian/devcontainer.json`, and then runs
+`.devcontainer/debian/post-container-install.sh` during `postCreateCommand`.
+That script copies files from the template into `/root/.ssh` if a host SSH
+config is available.
+
+The image therefore includes:
+
+```dockerfile
+RUN mkdir -p /root/.ssh /root/.sshtemplate && \
+    chmod 700 /root/.ssh /root/.sshtemplate
+```
+
+This matters because the bind mount is optional and may be absent or empty on a
+fresh machine. Without those directories already existing, the script can fail
+with a message like `Can't find your ./sshtemplate/config file`, and the whole
+post-create step exits non-zero. Creating the directories in the image keeps the
+mount target valid, preserves root ownership, and allows the SSH bootstrap to
+skip gracefully when no SSH config is mounted.
