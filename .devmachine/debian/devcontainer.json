@@ -1,5 +1,5 @@
 {
-  "name": "iknowagentic-devcontainer-builder",
+  "name": "polyhost-devcontainer-builder",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/xyz",
@@ -26,7 +26,7 @@
       ]
     }
   },
-  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/debian/post-container-install.sh",
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devmachine/debian/post-container-install.sh",
   // The user VS Code should run as inside the service container.
   // Docker-heavy devmachine workflows require root.
   "containerUser": "root",

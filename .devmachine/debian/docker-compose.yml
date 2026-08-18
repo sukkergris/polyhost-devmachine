@@ -10,7 +10,7 @@ services:
         DEVCONTAINER_BASE_IMAGE: ${DEVCONTAINER_BASE_IMAGE}
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
-      - ../..:/workspace:cached
+      - ../..:/xyz:cached
       - copilot-polyhost-devmachine:/root/.copilot
       - continue-polyhost-devmachine:/root/.continue
       - claude-polyhost-devmachine:/root/.claude

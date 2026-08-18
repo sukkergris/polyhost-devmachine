@@ -8,7 +8,9 @@
       "Bash(docker compose *)",
       "Bash(chmod +x /Users/sukkerfrit/private/polyhost/polyhost-devmachine/build/push-with-retry.sh)",
       "Bash(bash -n /Users/sukkerfrit/private/polyhost/polyhost-devmachine/build/push-with-retry.sh)",
-      "Bash(task --list-all)"
+      "Bash(task --list-all)",
+      "Bash(docker volume *)",
+      "Bash(docker exec polyhost-devcontainer-builder-dev-1 bash -c ' *)"
     ]
   }
 }
