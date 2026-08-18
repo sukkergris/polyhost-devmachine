@@ -79,14 +79,14 @@ registries generally support arbitrary path depth, unlike Docker Hub.
 
 ## Keeping the devcontainer's base image in sync
 
-The devcontainer (`.devmachine/debian/`) builds
-[`Dockerfile.devmachine`](../.devmachine/debian/Dockerfile.devmachine) FROM
+The devcontainer (`.devcontainer/debian/`) builds
+[`Dockerfile.devmachine`](../.devcontainer/debian/Dockerfile.devmachine) FROM
 `${DEVCONTAINER_BASE_IMAGE}:${IMAGE_TAG}`, read from its own
-`.devmachine/debian/.env`. That file is **generated, not hand-maintained** —
+`.devcontainer/debian/.env`. That file is **generated, not hand-maintained** —
 editing it directly will just get overwritten.
 
-- [`.devmachine/scripts/sync-build-env.sh`](../.devmachine/scripts/sync-build-env.sh)
-  reads `build/.env` and writes `.devmachine/debian/.env`:
+- [`.devcontainer/scripts/sync-build-env.sh`](../.devcontainer/scripts/sync-build-env.sh)
+  reads `build/.env` and writes `.devcontainer/debian/.env`:
 
   ```dotenv
   DEVCONTAINER_BASE_IMAGE=${IMAGE_NAMESPACE}/${IMAGE_NAME}

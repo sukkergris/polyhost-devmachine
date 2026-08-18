@@ -18,7 +18,7 @@ bash: dotnet: command not found
 ```
 
 A plain `docker exec -it <container> bash` (non-login) is unaffected, and so is
-the zsh terminal VS Code opens by default (per `.devmachine/debian/devcontainer.json`'s
+the zsh terminal VS Code opens by default (per `.devcontainer/debian/devcontainer.json`'s
 `terminal.integrated.defaultProfile.linux: zsh`) — which is why this can go
 unnoticed for a while.
 
