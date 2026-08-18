@@ -1,0 +1,28 @@
+name: polyhost-devcontainer-builder
+services:
+  # Define our main development service, let's call it 'dev'
+  dev:
+    # Instructions on how to build the image for this service
+    build:
+      context: .
+      dockerfile: Dockerfile.devmachine
+      args:
+        DEVCONTAINER_BASE_IMAGE: ${DEVCONTAINER_BASE_IMAGE}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ../..:/workspace:cached
+      - copilot-polyhost-devmachine:/root/.copilot
+      - continue-polyhost-devmachine:/root/.continue
+      - claude-polyhost-devmachine:/root/.claude
+      - claude-json-polyhost-devmachine:/root/.claude-json
+    command: sleep infinity
+
+volumes:
+  copilot-polyhost-devmachine:
+    name: setup-polyhost-devmachine-debian_copilot-polyhost-devmachine
+  continue-polyhost-devmachine:
+    name: setup-polyhost-devmachine-debian_continue-polyhost-devmachine
+  claude-polyhost-devmachine:
+    name: setup-polyhost-devmachine-debian_claude-polyhost-devmachine
+  claude-json-polyhost-devmachine:
+    name: setup-polyhost-devmachine-debian_claude-json-polyhost-devmachine

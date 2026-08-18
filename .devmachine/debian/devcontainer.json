@@ -1,0 +1,38 @@
+{
+  "name": "iknowagentic-devcontainer-builder",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/xyz",
+  "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/root/.sshtemplate,type=bind,readonly,consistency=cached"
+  ],
+
+  // Keep customizations for VS Code settings and extensions
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // Set bash as the default terminal (installed in Dockerfile)
+        "terminal.integrated.defaultProfile.linux": "zsh"
+        // Optional Neovim integration path:
+        // "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim"
+      },
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "EditorConfig.EditorConfig",
+        "csharpier.csharpier-vscode"
+      ]
+    }
+  },
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/debian/post-container-install.sh",
+  // The user VS Code should run as inside the service container.
+  // Docker-heavy devmachine workflows require root.
+  "containerUser": "root",
+  "remoteUser": "root",
+  "remoteEnv": { "LC_ALL": "C.UTF-8" }
+  // Optional: Command to run after the Compose service container is created.
+  // Useful for things like installing nvim plugins if config is copied/mounted.
+  // "postCreateCommand": "nvim --headless '+Lazy! sync' +qa"
+}

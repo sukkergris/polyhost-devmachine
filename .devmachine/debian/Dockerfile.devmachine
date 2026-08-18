@@ -1,0 +1,10 @@
+ARG IMAGE_TAG
+ARG DEVCONTAINER_BASE_IMAGE
+
+FROM ${DEVCONTAINER_BASE_IMAGE}:${IMAGE_TAG}
+
+USER root
+
+RUN mkdir -p /root/.claude-json && \
+    touch /root/.claude-json/claude.json && \
+    ln -s /root/.claude-json/claude.json /root/.claude.json

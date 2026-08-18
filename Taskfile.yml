@@ -1,0 +1,48 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  build:
+    desc: Build using version number from .env
+    cmds:
+      - docker compose -f build/docker-compose.yml build app
+
+  build:devcontainer-base-local:
+    desc: Build local base image for devcontainer without pulling from registry
+    cmds:
+      - docker build -f build/Dockerfile.debian -t devcontainer.debian.iknowagentic:local build
+
+  push:
+    desc: Push image to registry (requires DOCKER_REGISTRY, REPO_NAME, IMAGE_TAG in .env)
+    deps:
+      - build
+    cmds:
+      - |
+        set -euo pipefail
+        max_attempts=4
+        attempt=1
+        while true; do
+          echo "Push attempt ${attempt}/${max_attempts}..."
+          if docker compose --env-file build/.env -f build/docker-compose.yml push app; then
+            echo "Push succeeded."
+            break
+          fi
+          if [ "$attempt" -ge "$max_attempts" ]; then
+            echo "Push failed after ${max_attempts} attempts."
+            exit 1
+          fi
+          sleep_seconds=$((attempt * 10))
+          echo "Push failed; retrying in ${sleep_seconds}s..."
+          sleep "$sleep_seconds"
+          attempt=$((attempt + 1))
+        done
+
+  build-and-push:
+    desc: Build image with version and push to registry
+    cmds:
+      - task build
+      - task push
