@@ -2,7 +2,6 @@ name: polyhost-devcontainer-builder
 services:
   # Define our main development service, let's call it 'dev'
   dev:
-    # Instructions on how to build the image for this service
     build:
       context: .
       dockerfile: Dockerfile.devmachine

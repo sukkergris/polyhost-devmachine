@@ -3,9 +3,10 @@ FROM debian:13.6-slim
 
 # Use bash for the shell (default is sh)
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-# Set environment variables
-ENV USERNAME=root \
-    HOME_DIR="/root" \
+# This image only ever runs as root (see .devcontainer/debian: containerUser/
+# remoteUser are pinned to "root", and Dockerfile.devmachine stays root too),
+# so there's no alternate user, no sudo, and no USER switches below.
+ENV HOME_DIR="/root" \
     DOTNET_ROOT=/opt/dotnet \
     DEBIAN_FRONTEND=noninteractive \
     NODE_VERSION=24.11.1 \
@@ -18,8 +19,8 @@ ENV PATH="/usr/local/bin:/opt/dotnet:/opt/dotnet/tools:/root/.local/bin:/root/.d
 # Install all system dependencies FIRST
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    # DON'T EVER INSTALL sudo FOR A PRODUCTION CONTAINER!
-    sudo \
+    # No sudo: the container always runs as root already, so sudo would only
+    # add package weight and needless privilege-escalation surface.
     # Shells & terminal multiplexer
     bash \
     zsh \
@@ -69,8 +70,7 @@ RUN apt-get update && \
     update-locale LANG=C.UTF-8 LC_ALL=C.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
 
-# Root is required for Docker-heavy devmachine workflows.
-# Keep the image simple by not creating an alternate user.
+RUN curl -sL https://taskfile.dev/install.sh | sh -s -- -d -b /usr/local/bin
 
 # Debian's /etc/profile unconditionally resets PATH for root on login shells
 # (bash -l, su -, ssh), which would otherwise drop /opt/dotnet, the dotnet
@@ -97,8 +97,6 @@ RUN curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh && \
     # ./dotnet-install.sh --version 9.0.307 --install-dir $DOTNET_ROOT && \
     rm dotnet-install.sh
 
-# Stay root for the full devmachine build so Docker and system tools work without permission issues.
-USER root
 WORKDIR $HOME_DIR
 RUN mkdir -p /root/.ssh /root/.sshtemplate && \
     chmod 700 /root/.ssh /root/.sshtemplate
