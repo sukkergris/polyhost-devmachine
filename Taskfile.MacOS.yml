@@ -1,23 +1,27 @@
 version: "3"
 
 tasks:
-  build:mac:
-    desc: Build mac image using version number from .env
+  build:
+    desc: "[macOS] Build debian-mac image using version number from .env"
     cmds:
+      - echo "🍎 [macOS] build → docker compose build debian-mac"
       - docker compose -f build/docker-compose.yml build debian-mac
 
   push:
-    desc: Push image to registry (requires IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG in .env)
+    desc: "[macOS] Push debian-mac image to registry (requires IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG in .env)"
     deps:
-      - build:mac
+      - build
     cmds:
+      - echo "🍎 [macOS] push → build/push-with-retry.sh"
       - build/push-with-retry.sh
 
   build-and-push:
-    desc: Build mac image with version and push to registry
+    desc: "[macOS] Build debian-mac image and push it to the registry"
     cmds:
-      - task build:mac
-      - task push
+      - echo "🍎 [macOS] build-and-push → running build, then push"
+      - task: build
+      - task: push
+      - echo "🍎 [macOS] build-and-push → done"
 
   build:devcontainer-base-local:
     desc: Build local base image for devcontainer without pulling from registry

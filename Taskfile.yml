@@ -1,9 +1,8 @@
 version: "3"
 
 includes:
-  macos:
+  mac:
     taskfile: ./Taskfile.MacOS.yml
-    flatten: true
 
 tasks:
   default:
