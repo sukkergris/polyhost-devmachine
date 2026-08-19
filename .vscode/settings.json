@@ -23,6 +23,7 @@
         "procps",
         "sshtemplate",
         "stylua",
+        "taskfile",
         "userkeychain",
         "venv",
         "websockify",

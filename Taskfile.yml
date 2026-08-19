@@ -1,35 +1,12 @@
 version: "3"
 
+includes:
+  macos:
+    taskfile: ./Taskfile.MacOS.yml
+    flatten: true
+
 tasks:
   default:
     cmds:
       - task -l
     silent: true
-
-  build:
-    desc: Build using version number from .env
-    cmds:
-      - docker compose -f build/docker-compose.yml build debian-mac
-
-  build:devcontainer-base-local:
-    desc: Build local base image for devcontainer without pulling from registry
-    cmds:
-      - docker build -f build/Dockerfile.debian -t polyhost-devcontainer:debian-local build
-
-  push:
-    desc: Push image to registry (requires IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG in .env)
-    deps:
-      - build
-    cmds:
-      - build/push-with-retry.sh
-
-  build-and-push:
-    desc: Build image with version and push to registry
-    cmds:
-      - task build
-      - task push
-
-  devcontainer:sync-env:
-    desc: Regenerate .devcontainer/debian/.env from build/.env (registry/tag)
-    cmds:
-      - .devcontainer/scripts/sync-build-env.sh
