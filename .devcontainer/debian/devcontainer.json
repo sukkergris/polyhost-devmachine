@@ -28,7 +28,8 @@
         "EditorConfig.EditorConfig",
         "csharpier.csharpier-vscode",
         "task.vscode-task",
-        "Anthropic.claude-code"
+        "Anthropic.claude-code",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
